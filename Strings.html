@@ -1,0 +1,103 @@
+<!-- Brandon Montgomery -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Input Validation</title>
+  <style>
+    /* Page styling */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #eef2f3;
+      padding: 40px;
+    }
+
+    /* Form styling */
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #aaa;
+      width: 300px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+
+    #output {
+      font-weight: bold;
+      color: red;
+    }
+
+    #secretMessage {
+      color: green;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Access the Secret Message</h2>
+
+  <!-- Form to collect user input -->
+  <form id="userForm">
+    <!-- First Name input -->
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName">
+
+    <!-- Last Name input -->
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName">
+
+    <!-- ZIP Code input -->
+    <label for="zipCode">ZIP Code:</label>
+    <input type="text" id="zipCode" name="zipCode">
+
+    <!-- Submit button -->
+    <input type="submit" value="Submit">
+  </form>
+
+  <!-- Display validation messages -->
+  <p id="output"></p>
+
+  <!-- Secret message shown only if inputs are valid -->
+  <p id="secretMessage">Access Granted</p>
+
+  <script>
+    // Handle form submission
+    document.getElementById("userForm").onsubmit = function(event) {
+      event.preventDefault(); // Stop form from reloading the page
+
+      // Get input values
+      const first = document.getElementById("firstName").value.trim();
+      const last = document.getElementById("lastName").value.trim();
+      const zip = document.getElementById("zipCode").value.trim();
+      const fullName = first + " " + last;
+
+      // Name length validation
+      if (fullName.length > 20) {
+        document.getElementById("output").innerHTML = "⚠️ Full name must be 20 characters or fewer.";
+        document.getElementById("secretMessage").style.display = "none";
+        return;
+      }
+
+      // ZIP code validation: only 5 digits allowed
+      if (!/^\d{5}$/.test(zip)) {
+        document.getElementById("output").innerHTML = "⚠️ ZIP code must be exactly 5 digits.";
+        document.getElementById("secretMessage").style.display = "none";
+        return;
+      }
+
+      // If valid: show success + secret message
+      document.getElementById("output").innerHTML = "✅ All inputs valid.";
+      document.getElementById("secretMessage").style.display = "block";
+    };
+  </script>
+
+</body>
+</html>
